@@ -1,28 +1,20 @@
 import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 
-const SignUpScreen = () => {
-    const [username, setUserName] = useState('')
+const ForgotPassWord = () => {
     const [mobileno,setMobileno] = useState('')
     const [pass, setPass] = useState('')
     const [confpass,setConfpass]=useState('')
 
     const check = () => {
-        console.log(username);
+       
         console.log(pass);
         console.log(mobileno)
         console.log(confpass)
     }
     return (
         <View style={styles.container}>
-            <Text style={styles.logintxt}>SignUp Here*</Text>
-            <TextInput
-                style={styles.TextInput}
-                placeholder="Username"
-                value={username}
-                onChangeText={setUserName}
-            />
-
+            <Text style={styles.logintxt}>Forgot password *</Text>
             <TextInput
                 style={styles.TextInput}
                 placeholder="Mobile no"
@@ -55,7 +47,7 @@ const SignUpScreen = () => {
     )
 }
 
-export default SignUpScreen;
+export default ForgotPassWord;
 
 const styles = StyleSheet.create({
     container: {
