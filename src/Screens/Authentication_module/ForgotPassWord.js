@@ -1,17 +1,53 @@
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity ,Alert} from 'react-native'
 import React, { useState } from 'react'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+
 
 const ForgotPassWord = () => {
-    const [mobileno,setMobileno] = useState('')
+    const [mobileno, setMobileno] = useState('')
     const [pass, setPass] = useState('')
-    const [confpass,setConfpass]=useState('')
+    const [confpass, setConfpass] = useState('')
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword1, setShowPassword1] = useState(false);
+
+    const [error, setError] = useState({})
+    const validation = () => {
+        let FormErrors = {}
+
+        if (!mobileno) {
+            FormErrors.mobileno = 'Mobile number is required'
+        }
+
+        if (!pass) {
+            FormErrors.pass = 'Password is required'
+        }
+
+        if (!confpass) {
+            FormErrors.confpass = 'Confirm password is required'
+        }
+        else
+            if (confpass != pass) {
+                FormErrors.confpass = 'password is not match pls enter valid password'
+            }
+
+        setError(FormErrors);
+        return Object.keys(FormErrors).length === 0 //true  0===0
+    }
+
 
     const check = () => {
-       
-        console.log(pass);
-        console.log(mobileno)
-        console.log(confpass)
+
+        if (validation()) //true
+        {
+            Alert.alert("password reset....!");
+
+            setPass('');
+            setMobileno('')
+            setConfpass('')
+        }
     }
+
+
     return (
         <View style={styles.container}>
             <Text style={styles.logintxt}>Forgot password *</Text>
@@ -23,22 +59,47 @@ const ForgotPassWord = () => {
                 maxLength={10}
                 keyboardType='numeric'
             />
+            {error.mobileno && <Text>{error.mobileno}</Text>}
 
-            <TextInput
-                style={styles.TextInput}
-                placeholder="password"
-                value={pass}
-                onChangeText={setPass}
-                secureTextEntry
-            />
+            <View style={{ flexDirection: 'row', paddingHorizontal: 10, alignItems: 'center', borderWidth: 1, borderRadius: 10, marginVertical: 10 }}>
+                <TextInput
+                    style={{ flex: 1, }}
+                    placeholder="password"
+                    value={pass}
+                    onChangeText={setPass}
+                    secureTextEntry={!showPassword1}
+                />
+                <TouchableOpacity onPress={() => {
+                    setShowPassword1(!showPassword1)
+                }}>
+                    <Icon
+                        name={showPassword1 ? 'eye-off' : 'eye'}
+                        size={25}
+                        color={showPassword1 ? 'blue' : 'black'}
+                    />
+                </TouchableOpacity>
+            </View>
+            {error.pass && <Text>{error.pass}</Text>}
 
-            <TextInput
-                style={styles.TextInput}
-                placeholder="confirm password"
-                value={confpass}
-                onChangeText={setConfpass}
-                secureTextEntry
-            />
+            <View style={{ flexDirection: 'row', paddingHorizontal: 10, alignItems: 'center', borderWidth: 1, borderRadius: 10, marginVertical: 10 }}>
+                <TextInput
+                    style={{ flex: 1, }}
+                    placeholder="confirm password"
+                    value={confpass}
+                    onChangeText={setConfpass}
+                    secureTextEntry={!showPassword}
+                />
+                <TouchableOpacity onPress={() => {
+                    setShowPassword(!showPassword)
+                }}>
+                    <Icon
+                        name={showPassword ? 'eye-off' : 'eye'}
+                        size={25}
+                        color={showPassword ? 'blue' : 'black'}
+                    />
+                </TouchableOpacity>
+            </View>
+            {error.confpass && <Text>{error.confpass}</Text>}
 
             <TouchableOpacity style={styles.btnContainer} onPress={check}>
                 <Text style={styles.txt}>Button</Text>

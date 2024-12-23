@@ -1,11 +1,39 @@
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const LoginScreen = () => {
   const [username, setUserName] = useState('')
-  const [pass, setPass] = useState('')
+  const [pass, setPass] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState({})
 
-  const check = () =>{
+  const validation = () => {
+    let FormErrors={}
+
+    if(!username)
+    {
+      FormErrors.username='Username is required'
+    }
+
+    if(!pass)
+    {
+      FormErrors.pass='Password is required'
+    }
+
+    setError(FormErrors);
+    return Object.keys(FormErrors).length===0 //true  0===0
+  }
+
+  const check = () => {
+
+    if(validation()) //true
+    {
+      Alert.alert("Login Successfull....!");
+      setUserName('');
+      setPass('');
+    }
+
     console.log(username);
     console.log(pass);
   }
@@ -18,13 +46,27 @@ const LoginScreen = () => {
         value={username}
         onChangeText={setUserName}
       />
+      {error.username && <Text>{error.username}</Text>}
 
-      <TextInput
-        style={styles.TextInput}
-        placeholder="password"
-        value={pass}
-        onChangeText={setPass}
-      />
+      <View style={{ flexDirection: 'row', paddingHorizontal: 10, alignItems: 'center', borderWidth: 1, borderRadius: 10, marginVertical: 10 }}>
+        <TextInput
+          style={{ flex: 1, }}
+          placeholder="password"
+          value={pass}
+          onChangeText={setPass}
+          secureTextEntry={!showPassword}
+        />
+        <TouchableOpacity onPress={() => {
+          setShowPassword(!showPassword)
+        }}>
+          <Icon
+            name={showPassword ? 'eye-off' : 'eye'}
+            size={25}
+            color={showPassword ? 'blue' : 'black'}
+          />
+        </TouchableOpacity>
+      </View>
+      {error.pass && <Text>{error.pass}</Text>}
 
       <TouchableOpacity style={styles.btnContainer} onPress={check}>
         <Text style={styles.txt}>Button</Text>
@@ -66,3 +108,4 @@ const styles = StyleSheet.create({
     fontSize: 15
   }
 })
+
