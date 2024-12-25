@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity,Alert } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -18,24 +18,21 @@ const SignUpScreen = () => {
             FormErrors.username = 'Username is required'
         }
 
-        if(!mobileno)
-        {
-            FormErrors.mobileno='Mobile number is required'
+        if (!mobileno) {
+            FormErrors.mobileno = 'Mobile number is required'
         }
 
         if (!pass) {
             FormErrors.pass = 'Password is required'
         }
 
-        if(!confpass)
-        {
-            FormErrors.confpass='Confirm password is required'
+        if (!confpass) {
+            FormErrors.confpass = 'Confirm password is required'
         }
         else
-        if(confpass!=pass)
-        {
-            FormErrors.confpass='password is not match pls enter valid password'
-        }
+            if (confpass != pass) {
+                FormErrors.confpass = 'password is not match pls enter valid password'
+            }
 
         setError(FormErrors);
         return Object.keys(FormErrors).length === 0 //true  0===0
@@ -62,7 +59,7 @@ const SignUpScreen = () => {
                 value={username}
                 onChangeText={setUserName}
             />
-             {error.username && <Text>{error.username}</Text>}
+            {error.username && <Text>{error.username}</Text>}
 
             <TextInput
                 style={styles.TextInput}

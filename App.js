@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { View, Text } from 'react-native'
 import React from 'react'
+
 const App = () => {
   return (
     <View>
@@ -8,6 +9,4 @@ const App = () => {
   )
 }
 
-export default App;
-
-const styles = StyleSheet.create({})
+export default App
