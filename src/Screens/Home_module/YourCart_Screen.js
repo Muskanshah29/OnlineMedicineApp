@@ -36,10 +36,10 @@ const YourCart_Screen = () => {
             </View>
             <View style={styles.subcontainer3}>
                 <TouchableOpacity>
-                <Image
-                    source={require('../../Asset/Image/sugar_free_product1.png')}
-                    style={styles.imageStyle}
-                />
+                    <Image
+                        source={require('../../Asset/Image/sugar_free_product1.png')}
+                        style={styles.imageStyle}
+                    />
                 </TouchableOpacity>
                 <View>
                     <Text style={styles.textStyle}>Sugar free gold</Text>
@@ -54,10 +54,10 @@ const YourCart_Screen = () => {
             <View style={styles.divider} />
             <View style={styles.subcontainer4}>
                 <TouchableOpacity>
-                <Image
-                    source={require('../../Asset/Image/sugar_free_product2.png')}
-                    style={styles.imageStyle}
-                />
+                    <Image
+                        source={require('../../Asset/Image/sugar_free_product2.png')}
+                        style={styles.imageStyle}
+                    />
                 </TouchableOpacity>
                 <View>
                     <Text style={styles.textStyle}>Sugar free gold</Text>

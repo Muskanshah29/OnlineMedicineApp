@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity ,Alert} from 'react-native'
+import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -35,15 +35,42 @@ const ForgotPassWord = () => {
     }
 
 
-    const check = () => {
+    const check = async () => {
 
         if (validation()) //true
         {
-            Alert.alert("password reset....!");
+            const data = {
+                mobile: mobileno,
+                password: pass,
+                confirmPassword: confpass
+            }
 
-            setPass('');
-            setMobileno('')
-            setConfpass('')
+            try {
+                const response = await fetch("https://online-medicine-app-backend.vercel.app/user/forgot-password", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+
+                const result = await response.json();
+                console.log(result);
+
+                if (response.ok) {
+                    Alert.alert("password reset....!");
+
+                    setPass('');
+                    setMobileno('')
+                    setConfpass('')
+                }
+                else{
+                    Alert.alert("password reset failes",result.message)
+                }
+            }
+            catch (e) {
+                Alert.alert("something went wrong")
+            }
         }
     }
 
@@ -102,7 +129,7 @@ const ForgotPassWord = () => {
             {error.confpass && <Text>{error.confpass}</Text>}
 
             <TouchableOpacity style={styles.btnContainer} onPress={check}>
-                <Text style={styles.txt}>Button</Text>
+                <Text style={styles.txt}>reset</Text>
             </TouchableOpacity>
         </View>
     )

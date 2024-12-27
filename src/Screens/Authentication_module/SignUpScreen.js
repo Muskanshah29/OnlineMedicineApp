@@ -39,17 +39,47 @@ const SignUpScreen = () => {
     }
 
 
-    const check = () => {
-
+    const check = async () => {
         if (validation()) //true
         {
-            Alert.alert("Registartion Successfull....!");
-            setUserName('');
-            setPass('');
-            setMobileno('')
-            setConfpass('')
+            const userData = {
+                username: username,
+                mobile: mobileno,
+                password: pass,
+                confirmPassword: confpass
+            }
+
+            try {
+                const responce = await fetch("https://online-medicine-app-backend.vercel.app/user/register", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                })
+
+                const result = await responce.json();
+                console.log(result);
+
+                if (responce.ok) {
+                    Alert.alert("Registartion Successfull....!");
+                    setUserName('');
+                    setPass('');
+                    setMobileno('')
+                    setConfpass('')
+                }
+                else{
+                    Alert.alert("Registartion failed",result.message);
+                }
+
+            } catch (err) {
+                Alert.alert("unable to connect with server")
+            }
+
         }
     }
+
+
     return (
         <View style={styles.container}>
             <Text style={styles.logintxt}>SignUp Here*</Text>
@@ -112,7 +142,7 @@ const SignUpScreen = () => {
             {error.confpass && <Text>{error.confpass}</Text>}
 
             <TouchableOpacity style={styles.btnContainer} onPress={check}>
-                <Text style={styles.txt}>Button</Text>
+                <Text style={styles.txt}>SignUp</Text>
             </TouchableOpacity>
         </View>
     )
