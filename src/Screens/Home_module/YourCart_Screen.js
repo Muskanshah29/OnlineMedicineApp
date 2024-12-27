@@ -35,10 +35,12 @@ const YourCart_Screen = () => {
                 </TouchableOpacity>
             </View>
             <View style={styles.subcontainer3}>
+                <TouchableOpacity>
                 <Image
                     source={require('../../Asset/Image/sugar_free_product1.png')}
                     style={styles.imageStyle}
                 />
+                </TouchableOpacity>
                 <View>
                     <Text style={styles.textStyle}>Sugar free gold</Text>
                     <Text style={styles.text}>bottle of 500 pellets</Text>
@@ -49,12 +51,14 @@ const YourCart_Screen = () => {
                 </View>
 
             </View>
-
+            <View style={styles.divider} />
             <View style={styles.subcontainer4}>
+                <TouchableOpacity>
                 <Image
                     source={require('../../Asset/Image/sugar_free_product2.png')}
                     style={styles.imageStyle}
                 />
+                </TouchableOpacity>
                 <View>
                     <Text style={styles.textStyle}>Sugar free gold</Text>
                     <Text style={styles.text}>bottle of 500 pellets</Text>
@@ -65,7 +69,7 @@ const YourCart_Screen = () => {
                 </View>
 
             </View>
-
+            <View style={styles.divider} />
             <View>
                 <Text style={styles.textStyle}>Payment Summary</Text>
                 <View style={{ flexDirection: 'row' }}>
@@ -85,7 +89,7 @@ const YourCart_Screen = () => {
                     <Text style={styles.text}>Shipping</Text>
                     <Text style={styles.price}>Free</Text>
                 </View>
-                <Text style={{ color: 'grey', marginLeft: 15, marginRight: 15 }}>_______________________________________________________</Text>
+                <View style={styles.divider} />
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={styles.text}>Total</Text>
                     <Text style={styles.price}>Rs.185</Text>
@@ -172,6 +176,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontWeight: 'bold',
         fontSize: 15
-    }
+    },
+    divider: {
+        height: 1,
+        backgroundColor: '#E7E9EC',
+        marginVertical: 10,
+    },
 
 })
