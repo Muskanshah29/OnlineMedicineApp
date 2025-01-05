@@ -1,50 +1,46 @@
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, Image, ScrollView } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Star from 'react-native-vector-icons/Feather';
 import Back from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
+const ListingScreen = ({route,navigation}) => {
 
-const ListingScreen = () => {
-  const data = [
-    { id: 1, name: 'item1' },
-    { id: 2, name: 'item1' },
-    { id: 3, name: 'item1' },
-  ];
+  const{categoryName}=route.params;
+  console.log(categoryName)
+  const[data,setData]=useState([]);
   
-  const data1 = [
-    { id: 1, name: 'item1' },
-    { id: 2, name: 'item1' },
-    { id: 3, name: 'item1' },
-    { id: 4, name: 'item1' },
-    { id: 5, name: 'item1' },
-    { id: 6, name: 'item1' }
-  ];
 
-  const renderItem1 = () => (
-    <View style={styles.cartContainer1}>
-      <View style={styles.cartimg1}>
-        <Image
-          source={require('../../Asset/Image/Mask.png')}
-          style={{ height: '90%', width: '100%', alignSelf: 'center' }}
-        />
-      </View>
-      <Text style={{ marginLeft: 10, color: '#090F47' }}>Sugar</Text>
-      <Text style={{ marginLeft: 10, color: '#090F47' }}>Substitute</Text>
-    </View>
-  );
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`https://online-medicine-app-backend.vercel.app/api/products/view/category/${categoryName}`);
+        console.log(response.data);
+        setData(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, [categoryName]);
 
-  const renderItem = () => (
+  const renderItem = ({item}) => (
+    <TouchableOpacity onPress={() => {
+      navigation.navigate('detailscreen', { product: item });
+    }}
+    
+      >
     <View style={styles.cartContainer}>
       <View style={styles.cartimg}>
         <Image
-          source={require('../../Asset/Image/product.png')}
-          style={{ height: '90%', width: '50%', alignSelf: 'center' }}
+          source={{uri:item.image}}
+          style={{ height: '100%', width: '100%', alignSelf: 'center' }}
         />
       </View>
-      <Text style={{ marginLeft: 10, color: '#090F47' }}>Accu-check Active</Text>
-      <Text style={{ marginLeft: 10, color: '#090F47' }}>Test Strip</Text>
+      <Text style={{ marginLeft: 10, color: '#090F47' }}>{item.name}</Text>
+      <Text style={{ marginLeft: 10, color: '#090F47' }}>{item.brandname}</Text>
 
       <View style={{ flexDirection: 'row', width: '100%' }}>
-        <Text style={{ width: '60%', fontSize: 15, fontWeight: '500', marginLeft: 10 }}>rs 112</Text>
+        <Text style={{ width: '60%', fontSize: 15, fontWeight: '500', marginLeft: 10 }}>rs {item.price}</Text>
         <View style={{
           backgroundColor: '#FFC000', width: '36%', flexDirection: 'row',
           justifyContent: 'space-between', padding: 4,
@@ -54,36 +50,32 @@ const ListingScreen = () => {
           <Text style={{ color: 'white', fontWeight: 'bold' }}>4.2</Text>
         </View>
       </View>
-    </View>
+    </View></TouchableOpacity>
   );
+
 
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: 'row', padding: 5 }}>
-        <TouchableOpacity>
+      <View style={{ flexDirection: 'row', padding: 10,alignItems:'center' }}>
+        <TouchableOpacity style={{backgroundColor:'blue',padding:5,borderRadius:10}} onPress={()=>{
+          navigation.goBack();
+        }}>
           <Back
             name="arrow-back"
             size={29}
-            color='black'
+            color='white'
             style={{ padding: 5 }}
           />
         </TouchableOpacity>
-        <Text style={{ marginLeft: 10, padding: 7, fontSize: 19, fontWeight: '500' }}>Diabetes Care</Text>
+        <Text style={{ marginLeft: 10, padding: 7, fontSize: 19, fontWeight: '500' }}>{categoryName} Care</Text>
       </View>
-      <Text style={{ marginLeft: 15, fontSize: 15, fontWeight: '500' }}>Categories</Text>
-      <FlatList
-        data={data}
-        renderItem={renderItem1}
-        horizontal={true} 
-        keyExtractor={(item) => item.id.toString()}
-        showsHorizontalScrollIndicator={false} 
-      />
+     
       <Text style={{ fontSize: 17,marginTop:15,marginLeft:13, fontWeight: '500' }}>All Products</Text>
       <FlatList
-        data={data1}
+        data={data}
         renderItem={renderItem}
         numColumns={2}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id}
       />
     </View>
   );

@@ -1,7 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React,{useEffect} from 'react'
 
-const SplashScreen = () => {
+const SplashScreen = ({navigation}) => {
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.replace('login'); 
+    }, 3000);
+
+    return () => clearTimeout(timer); 
+  }, [navigation]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.txt}>Online Medicine App</Text>
