@@ -11,7 +11,7 @@ const App = () => {
 
 export default App
 
-// const styles = StyleSheet.create({})
+const styles = StyleSheet.create({})
 
 // import React from "react";
 // import {} from 'react-native'
@@ -20,6 +20,7 @@ export default App
 // const App=()=>{
 //   return(
 //     <BottomTabNavigatorScreen/>
+
 //   )
 // }
 // export default App

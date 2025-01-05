@@ -4,16 +4,18 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../Screens/Home_module/HomeScreen';
+import NotificationScreen from '../Screens/Home_module/NotificationScreen';
+import YourCart_Screen from '../Screens/Home_module/YourCart_Screen';
 
 const Tab = createBottomTabNavigator();
 
-function BellScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Bell Screen</Text>
-    </View>
-  );
-}
+// function BellScreen() {
+//   return (
+//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//       <Text>Bell Screen</Text>
+//     </View>
+//   );
+// }
 
 function PlusScreen() {
   return (
@@ -23,13 +25,6 @@ function PlusScreen() {
   );
 }
 
-function BagScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Bag Screen</Text>
-    </View>
-  );
-}
 
 function ProfileScreen() {
   return (
@@ -67,7 +62,7 @@ const BottomTabNavigatorScreen = () => {
         })}
       >
         <Tab.Screen name="Home" component={HomeScreen} options={{headerShown:false}} />
-        <Tab.Screen name="Bell" component={BellScreen} />
+        <Tab.Screen name="Bell" component={NotificationScreen} options={{headerShown:false}}/>
         <Tab.Screen
           name="Plus"
           component={PlusScreen}
@@ -86,8 +81,8 @@ const BottomTabNavigatorScreen = () => {
             ),
           }}
         />
-        <Tab.Screen name="Bag" component={BagScreen} />
-        <Tab.Screen name="Profile" component={ProfileScreen} />
+        <Tab.Screen name="Bag" component={YourCart_Screen} options={{headerShown:false}}/>
+        <Tab.Screen name="Profile" component={ProfileScreen} options={{headerShown:false}}/>
       </Tab.Navigator>
     </NavigationContainer>
   );
