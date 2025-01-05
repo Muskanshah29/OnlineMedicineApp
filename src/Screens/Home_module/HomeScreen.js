@@ -1,30 +1,16 @@
-import { FlatList, StyleSheet, Text, View, Image, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import { FlatList, StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import Face from 'react-native-vector-icons/FontAwesome6'
 import Cart from 'react-native-vector-icons/Feather'
 import Bell from 'react-native-vector-icons/Fontisto'
 import { SearchBar } from 'react-native-elements'
-const HomeScreen = () => {
-    const [search, setSearch] = useState('')
+import axios from 'axios'
 
-    const data = [
-        {
-            id: 1,
-            name: 'item1'
-        },
-        {
-            id: 2,
-            name: 'item1'
-        },
-        {
-            id: 3,
-            name: 'item1'
-        },
-        {
-            id: 4,
-            name: 'item1'
-        }
-    ]
+
+const HomeScreen = ({ navigation }) => {
+    const [search, setSearch] = useState('')
+    const [data, setData] = useState([]);
+
 
     const data1 = [
         {
@@ -45,31 +31,54 @@ const HomeScreen = () => {
         }
     ]
 
+    useEffect(() => {
+        const fetchCategory = async () => {
+            try {
+                const responce = await axios.get("https://online-medicine-app-backend.vercel.app/api/categories/getCategory");
+                console.log(responce.data);
+                setData(responce.data);
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
+        fetchCategory();
+    }, [])
+
     const rederItem1 = ({ item }) => (
-        <View style={{ backgroundColor: 'white', margin: 10, width: 85, height: '90%', alignItems: 'center', borderRadius: 40, borderWidth: 1 }}>
-            <View style={{ backgroundColor: 'pink', width: 70, height: 70, borderRadius: 70, marginVertical: 10 }}>
+        <TouchableOpacity
+            onPress={() => {
+                navigation.navigate('listingscreen',{categoryName:item.categoryName})
+            }}>
+            <View style={{ backgroundColor: 'white', margin: 10, width: 85, height: '90%', alignItems: 'center', borderRadius: 40, borderWidth: 1 }}>
+                <View style={{ backgroundColor: 'pink', width: 70, height: 70, borderRadius: 70, marginVertical: 10 }}>
+                    <Image
+                        source={{ uri: item.image }}
+                        style={{ width: '100%', height: '100%', borderRadius: 50 }}
+                    />
+                </View>
+                <Text>{item.categoryName}</Text>
             </View>
-            <Text>{item.name}</Text>
-        </View>
+        </TouchableOpacity>
     )
 
-    const renderItem =()=>(
+    const renderItem = () => (
         <View style={styles.cartContainer}>
             <View style={styles.cartimg}>
-                
+
             </View>
             <Text>abc</Text>
             <Text>abc</Text>
 
-            <View style={{flexDirection:'row',width:'100%'}}>
-                <Text style={{width:'60%'}}>rs 100</Text>
-                <View style={{backgroundColor:'#FFC000',width:'40%',flexDirection:'row',justifyContent:'space-between',padding:4,borderTopLeftRadius:20,borderBottomLeftRadius:20}}>
-                   <Bell
-                      name='bell'
-                      size={22}
-                      color='white'
-                   /> 
-                   <Text style={{color:'white'}}>3.2</Text>
+            <View style={{ flexDirection: 'row', width: '100%' }}>
+                <Text style={{ width: '60%' }}>rs 100</Text>
+                <View style={{ backgroundColor: '#FFC000', width: '40%', flexDirection: 'row', justifyContent: 'space-between', padding: 4, borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }}>
+                    <Bell
+                        name='bell'
+                        size={22}
+                        color='white'
+                    />
+                    <Text style={{ color: 'white' }}>3.2</Text>
                 </View>
             </View>
         </View>
@@ -114,20 +123,20 @@ const HomeScreen = () => {
                             value={search}
 
                             containerStyle={{
-                                backgroundColor:'transparent',
-                                borderTopWidth:0,
-                                borderBottomWidth:0
+                                backgroundColor: 'transparent',
+                                borderTopWidth: 0,
+                                borderBottomWidth: 0
                             }}
 
                             inputContainerStyle={{
-                                backgroundColor:'white',
-                                borderRadius:30,
-                                paddingHorizontal:10
+                                backgroundColor: 'white',
+                                borderRadius: 30,
+                                paddingHorizontal: 10
                             }}
 
                             inputStyle={{
-                                color:'black',
-                                fontSize:15
+                                color: 'black',
+                                fontSize: 15
                             }}
 
                         />
@@ -157,11 +166,11 @@ const HomeScreen = () => {
                     <Text style={{ color: 'blue' }}>more</Text>
                 </View>
 
-               <FlatList
-                data={data1}
-                renderItem={renderItem}
-                numColumns={2}
-               />
+                <FlatList
+                    data={data1}
+                    renderItem={renderItem}
+                    numColumns={2}
+                />
             </View>
         </ScrollView>
     )
@@ -172,7 +181,7 @@ export default HomeScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-       
+
     },
     header: {
         backgroundColor: 'blue',
@@ -192,17 +201,17 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         padding: 5
     },
-    cartContainer:{
-        backgroundColor:'#F3F4F5',
-        flex:1,
-        margin:10,
-        padding:5,
-        borderRadius:20
+    cartContainer: {
+        backgroundColor: '#F3F4F5',
+        flex: 1,
+        margin: 10,
+        padding: 5,
+        borderRadius: 20
 
     },
-    cartimg:{
-        backgroundColor:'grey',
-        height:150,
-        borderRadius:20
+    cartimg: {
+        backgroundColor: 'grey',
+        height: 150,
+        borderRadius: 20
     }
 })
