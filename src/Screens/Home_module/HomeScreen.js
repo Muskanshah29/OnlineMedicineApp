@@ -34,7 +34,7 @@ const HomeScreen = ({ navigation }) => {
     useEffect(() => {
         const fetchCategory = async () => {
             try {
-                const responce = await axios.get("https://online-medicine-app-backend.vercel.app/api/categories/getCategory");
+                const responce = await axios.get("https://online-medicine-app-backend.vercel.app/api/categories/");
                 console.log(responce.data);
                 setData(responce.data);
             }
@@ -155,10 +155,10 @@ const HomeScreen = ({ navigation }) => {
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', padding: 10 }}>
-                    <Image
+                    {/* <Image
                         source={require('../../Asset/Image/offer.png')}
                         style={{ width: '100%', height: 150 }}
-                    />
+                    /> */}
                 </View>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
